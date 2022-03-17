@@ -23,7 +23,7 @@ func main() {
 
   app := NewApp(q)
 
-  c, err := app.q.Subscribe(ports.SubscriptionOptions{
+  c, err := app.Queue.Subscribe(ports.SubscriptionOptions{
     Topic: "test-topic",
     Name: "test-consumer",
   })
@@ -35,7 +35,7 @@ func main() {
     select {
       case msg := <-c:
         fmt.Println(string(msg.Payload))
-        q.Ack(msg.MessageID)
+        app.Queue.Ack(msg.MessageID)
       default:
     }
   }
