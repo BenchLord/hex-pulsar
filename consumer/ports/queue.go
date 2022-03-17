@@ -15,7 +15,7 @@ type Message struct {
 }
 
 // SubscriptionOptions are used to subscribe to a producer.
-type SubscriptionOptions {
+type SubscriptionOptions struct {
   string Topic
   string Name
 }
