@@ -4,7 +4,7 @@ import (
   "fmt"
 
   "github.com/BenchLord/hex-pulsar/consumer/ports"
-  "github.com/BenchLord/hex-pulsar/consumer/adapter/pulsar"
+  "github.com/BenchLord/hex-pulsar/consumer/adapters/pulsar"
 )
 
 type App struct {
