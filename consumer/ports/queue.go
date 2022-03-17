@@ -10,12 +10,12 @@ type Queue interface {
 // Message defines the data that will be set through the channel created
 // when subscribing to a producer.
 type Message struct {
-  string MessageID
-  []byte Payload
+  MessageID string
+  Payload []byte
 }
 
 // SubscriptionOptions are used to subscribe to a producer.
 type SubscriptionOptions struct {
-  string Topic
-  string Name
+  Topic string
+  Name string
 }

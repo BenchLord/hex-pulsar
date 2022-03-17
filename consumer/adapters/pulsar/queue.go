@@ -24,7 +24,12 @@ func NewQueue() (*Queue, error) {
     return nil, fmt.Errorf("error creating pulsar client: %v", err)
   }
 
-  return &Queue{client}
+  q := &Queue{
+    client: client,
+    messages: make(map[string]pulsar.ConsumerMessage),
+  }
+
+  return q, nil
 }
 
 func (q *Queue) Subscribe(opts ports.SubscriptionOptions) (<-chan *ports.Message, error) {
@@ -41,12 +46,12 @@ func (q *Queue) Subscribe(opts ports.SubscriptionOptions) (<-chan *ports.Message
     return nil, fmt.Errorf("error subscribing to pulsar topic: %v", err)
   }
 
-  go func(q *Queue, in chan pulsar.ConsumerMessage, out <-chan *ports.Message) {
+  go func(q *Queue, in chan pulsar.ConsumerMessage, out chan *ports.Message) {
     count := 1
     defer consumer.Close()
     for {
       select {
-        case msg := <-c:
+        case msg := <-in:
           msgID := strconv.Itoa(count)
           // pass q in as param?
           q.messages[msgID] = msg
